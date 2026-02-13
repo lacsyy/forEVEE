@@ -1,749 +1,270 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Blooming Peony Bouquet</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growing White Tulips</title>
 
-        body {
-            min-height: 100vh;
-            min-height: 100svh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(to bottom, #0a0e1a 0%, #1a1f2e 100%);
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-        }
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background: radial-gradient(circle at center, #042a2b 0%, #000814 70%);
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+}
 
-        .container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            height: 100svh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+/* 🌿 Ground with Grass */
+.ground{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:18vh;
+  background:linear-gradient(#1b5e20,#0d3b12);
+  overflow:hidden;
+}
 
-        .bouquet {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: -20px;
-        }
+/* Grass blades */
+.grass{
+  position:absolute;
+  bottom:0;
+  width:3px;
+  height:30px;
+  background:#2e7d32;
+  border-radius:50%;
+  transform-origin:bottom;
+  animation:sway 3s ease-in-out infinite alternate;
+}
 
-        /* Grass blades */
-        .grass-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40vh;
-            z-index: 1;
-            pointer-events: none;
-        }
+@keyframes sway{
+  from{ transform:rotate(-8deg);}
+  to{ transform:rotate(8deg);}
+}
 
-        .grass-blade {
-            position: absolute;
-            bottom: 0;
-            width: clamp(5px, 1vw, 8px);
-            background: linear-gradient(to top, #2d5016 0%, #4caf50 50%, #66bb6a 100%);
-            border-radius: 50% 50% 0 0;
-            transform-origin: bottom center;
-            animation: grassSway 3s ease-in-out infinite;
-        }
+/* Scene container */
+.scene{
+  display:flex;
+  justify-content: space-evenly;
+  align-items:flex-end;
+  width:100%;
+  height:60vh;
+  padding:0 5vw;
+  position:relative;
+  z-index:2;
+}
 
-        @keyframes grassSway {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(3deg); }
-            75% { transform: rotate(-3deg); }
-        }
+/* 🌷 Bigger Stem */
+.stem{
+  width:1.5vw;
+  max-width:12px;
+  height:38vh;
+  background:linear-gradient(#43a047,#1b5e20);
+  position:relative;
+  transform-origin:bottom;
+  transform:scaleY(0);
+  animation: growStem 2s ease-out forwards;
+  display:flex;
+  justify-content:center;
+}
 
-        .flower {
-            position: relative;
-            width: clamp(200px, 35vw, 300px);
-            height: clamp(200px, 35vw, 300px);
-            transform-style: preserve-3d;
-            animation: gentleSway 4s ease-in-out infinite;
-            z-index: 10;
-        }
+@keyframes growStem{
+  to{ transform:scaleY(1); }
+}
 
-        .flower:nth-child(1) {
-            animation-delay: 0s;
-            z-index: 3;
-        }
+/* Leaves */
+.leaf{
+  position:absolute;
+  width:10vw;
+  max-width:110px;
+  height:5vw;
+  max-height:50px;
+  background:linear-gradient(#4caf50,#1b5e20);
+  border-radius:50%;
+  opacity:0;
+  animation: showLeaf 1s ease forwards;
+  animation-delay:1.5s;
+}
 
-        .flower:nth-child(2) {
-            animation-delay: 0.5s;
-            margin-left: clamp(-40px, -10vw, -60px);
-            margin-bottom: clamp(-25px, -6vw, -40px);
-            z-index: 2;
-            transform: scale(clamp(0.85, 0.9, 0.9));
-        }
+.leaf.left{
+  left:-8vw;
+  top:40%;
+  transform:rotate(-40deg);
+}
 
-        .flower:nth-child(3) {
-            animation-delay: 1s;
-            margin-left: clamp(-40px, -10vw, -60px);
-            margin-bottom: clamp(-15px, -4vw, -20px);
-            z-index: 4;
-            transform: scale(clamp(0.9, 0.95, 0.95));
-        }
+.leaf.right{
+  right:-8vw;
+  top:55%;
+  transform:rotate(40deg);
+}
 
-        .flower:nth-child(4) {
-            animation-delay: 1.5s;
-            margin-left: clamp(-40px, -10vw, -60px);
-            margin-bottom: clamp(-30px, -8vw, -50px);
-            z-index: 1;
-            transform: scale(clamp(0.8, 0.85, 0.85));
-        }
+@keyframes showLeaf{
+  to{ opacity:1; }
+}
 
-        .flower:nth-child(5) {
-            animation-delay: 2s;
-            margin-left: clamp(-40px, -10vw, -60px);
-            margin-bottom: clamp(-20px, -5vw, -30px);
-            z-index: 5;
-            transform: scale(clamp(0.87, 0.92, 0.92));
-        }
+/* Flower container */
+.flower{
+  position:absolute;
+  bottom:100%;
+  transform:scale(0);
+  animation: riseFlower 1.2s ease-out forwards;
+  animation-delay:2s;
+}
 
-        @keyframes gentleSway {
-            0%, 100% { transform: rotate(0deg) translateX(0); }
-            25% { transform: rotate(2deg) translateX(5px); }
-            75% { transform: rotate(-2deg) translateX(-5px); }
-        }
+@keyframes riseFlower{
+  to{ transform:scale(1); }
+}
 
-        .bloom-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: clamp(40px, 8vw, 60px);
-            height: clamp(40px, 8vw, 60px);
-            background: radial-gradient(circle, #ffeb3b 0%, #fdd835 50%, #f9a825 100%);
-            border-radius: 50%;
-            z-index: 100;
-            animation: centerPulse 3s ease-in-out infinite;
-            box-shadow: 0 0 clamp(15px, 3vw, 20px) rgba(255, 235, 59, 0.6);
-        }
+/* 🌷 Bigger Tulip */
+.tulip {
+  position: relative;
+  width: 8vw;
+  max-width: 90px;
+  height: 12vw;
+  max-height: 130px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+}
 
-        @keyframes centerPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-        }
+/* Center petal */
+.petal {
+  position: absolute;
+  bottom: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(to top, #dbe9ff, #ffffff);
+  border-radius: 50% 50% 30% 30%;
+  transform-origin: bottom center;
+  transform: scaleY(0);
+  animation: bloom 1.5s ease-out forwards;
+  animation-delay: 2.5s;
+}
 
-        .petal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: clamp(80px, 16vw, 120px);
-            height: clamp(106px, 21vw, 160px);
-            transform-origin: center bottom;
-            animation: bloom 3s ease-out forwards;
-            opacity: 0;
-        }
+/* Left petal */
+.petal.left {
+  transform: rotate(-25deg) scaleY(0);
+  left: 0;
+}
 
-        .petal-inner {
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 50% 80%, 
-                #ff6b9d 0%, 
-                #f06292 30%, 
-                #ec407a 60%, 
-                #e91e63 100%);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            box-shadow: 
-                inset -10px -10px 30px rgba(0, 0, 0, 0.2),
-                inset 10px 10px 30px rgba(255, 255, 255, 0.3),
-                0 10px 30px rgba(233, 30, 99, 0.4);
-            transform-origin: center bottom;
-            animation: petalCurl 3s ease-in-out infinite;
-        }
+/* Right petal */
+.petal.right {
+  transform: rotate(25deg) scaleY(0);
+  right: 0;
+}
 
-        @keyframes bloom {
-            0% {
-                transform: translate(-50%, -50%) scale(0) rotate(0deg);
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1) rotate(var(--rotation));
-                opacity: 1;
-            }
-        }
+@keyframes bloom {
+  to { transform: scaleY(1); }
+}
 
-        @keyframes petalCurl {
-            0%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(1.05); }
-        }
+/* Fireflies */
+.firefly{
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:#cfff00;
+  border-radius:50%;
+  box-shadow:0 0 10px #cfff00;
+  animation: float 6s infinite ease-in-out alternate;
+}
 
-        /* Layer petals with different rotations */
-        .petal:nth-child(1) { --rotation: 0deg; animation-delay: 0s; }
-        .petal:nth-child(2) { --rotation: 45deg; animation-delay: 0.1s; }
-        .petal:nth-child(3) { --rotation: 90deg; animation-delay: 0.2s; }
-        .petal:nth-child(4) { --rotation: 135deg; animation-delay: 0.3s; }
-        .petal:nth-child(5) { --rotation: 180deg; animation-delay: 0.4s; }
-        .petal:nth-child(6) { --rotation: 225deg; animation-delay: 0.5s; }
-        .petal:nth-child(7) { --rotation: 270deg; animation-delay: 0.6s; }
-        .petal:nth-child(8) { --rotation: 315deg; animation-delay: 0.7s; }
+@keyframes float{
+  from{ transform: translateY(0px);}
+  to{ transform: translateY(-60px);}
+}
 
-        /* Inner layer petals - smaller */
-        .petal.layer-2 {
-            width: clamp(66px, 13.3vw, 100px);
-            height: clamp(86px, 17.3vw, 130px);
-            z-index: 10;
-        }
+/* 📱 Mobile */
+@media(max-width:768px){
 
-        .petal.layer-2:nth-child(9) { --rotation: 22.5deg; animation-delay: 0.8s; }
-        .petal.layer-2:nth-child(10) { --rotation: 67.5deg; animation-delay: 0.9s; }
-        .petal.layer-2:nth-child(11) { --rotation: 112.5deg; animation-delay: 1s; }
-        .petal.layer-2:nth-child(12) { --rotation: 157.5deg; animation-delay: 1.1s; }
-        .petal.layer-2:nth-child(13) { --rotation: 202.5deg; animation-delay: 1.2s; }
-        .petal.layer-2:nth-child(14) { --rotation: 247.5deg; animation-delay: 1.3s; }
-        .petal.layer-2:nth-child(15) { --rotation: 292.5deg; animation-delay: 1.4s; }
-        .petal.layer-2:nth-child(16) { --rotation: 337.5deg; animation-delay: 1.5s; }
+  .stem{
+    width:2vw;
+    height:35vh;
+  }
 
-        .petal.layer-2 .petal-inner {
-            background: radial-gradient(ellipse at 50% 80%, 
-                #ff8fab 0%, 
-                #f48fb1 30%, 
-                #f06292 60%, 
-                #ec407a 100%);
-        }
+  .tulip{
+    width:12vw;
+    height:16vw;
+  }
 
-        /* Innermost layer */
-        .petal.layer-3 {
-            width: clamp(46px, 9.3vw, 70px);
-            height: clamp(60px, 12vw, 90px);
-            z-index: 20;
-        }
+  .leaf{
+    width:14vw;
+    height:7vw;
+  }
 
-        .petal.layer-3:nth-child(17) { --rotation: 15deg; animation-delay: 1.6s; }
-        .petal.layer-3:nth-child(18) { --rotation: 60deg; animation-delay: 1.7s; }
-        .petal.layer-3:nth-child(19) { --rotation: 105deg; animation-delay: 1.8s; }
-        .petal.layer-3:nth-child(20) { --rotation: 150deg; animation-delay: 1.9s; }
-        .petal.layer-3:nth-child(21) { --rotation: 195deg; animation-delay: 2s; }
-        .petal.layer-3:nth-child(22) { --rotation: 240deg; animation-delay: 2.1s; }
-        .petal.layer-3:nth-child(23) { --rotation: 285deg; animation-delay: 2.2s; }
-        .petal.layer-3:nth-child(24) { --rotation: 330deg; animation-delay: 2.3s; }
-
-        .petal.layer-3 .petal-inner {
-            background: radial-gradient(ellipse at 50% 80%, 
-                #ffb3c1 0%, 
-                #f8bbd0 30%, 
-                #f48fb1 60%, 
-                #f06292 100%);
-        }
-
-        /* Stem */
-        .stem {
-            position: absolute;
-            bottom: clamp(-150px, -30vh, -250px);
-            left: 50%;
-            transform: translateX(-50%);
-            width: clamp(8px, 1.5vw, 12px);
-            height: clamp(200px, 35vh, 300px);
-            background: linear-gradient(to bottom, #4caf50 0%, #388e3c 50%, #2d5016 100%);
-            border-radius: 10px;
-            z-index: -1;
-            animation: growStem 2s ease-out forwards;
-        }
-
-        @keyframes growStem {
-            from { height: 0; }
-            to { height: clamp(200px, 35vh, 300px); }
-        }
-
-        /* Leaves */
-        .leaf {
-            position: absolute;
-            width: clamp(50px, 10vw, 80px);
-            height: clamp(25px, 5vw, 40px);
-            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
-            border-radius: 0 50% 50% 0;
-            bottom: 30%;
-            left: clamp(-40px, -8vw, -60px);
-            transform-origin: right center;
-            animation: leafGrow 2s ease-out forwards;
-            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .leaf:nth-child(2) {
-            left: auto;
-            right: clamp(-40px, -8vw, -60px);
-            border-radius: 50% 0 0 50%;
-            transform: scaleX(-1);
-            animation-delay: 0.3s;
-        }
-
-        @keyframes leafGrow {
-            from { 
-                transform: scale(0) rotate(-90deg);
-                opacity: 0;
-            }
-            to { 
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        /* Sparkle effects */
-        .sparkle {
-            position: absolute;
-            width: clamp(4px, 1vw, 6px);
-            height: clamp(4px, 1vw, 6px);
-            background: radial-gradient(circle, #ffffff 0%, #80deea 50%, transparent 100%);
-            border-radius: 50%;
-            animation: sparkleAnim 2s ease-in-out infinite;
-            box-shadow: 0 0 clamp(10px, 2vw, 15px) rgba(128, 222, 234, 0.9), 
-                        0 0 clamp(15px, 3vw, 25px) rgba(255, 255, 255, 0.6);
-        }
-
-        @keyframes sparkleAnim {
-            0%, 100% { 
-                opacity: 0;
-                transform: scale(0);
-            }
-            50% { 
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .info {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 18px;
-            text-align: center;
-            opacity: 0;
-            display: none;
-        }
-
-        /* Mobile specific adjustments */
-        @media (max-width: 768px) {
-            .bouquet {
-                transform: scale(1);
-                gap: 0;
-            }
-
-            .flower:nth-child(1) {
-                z-index: 5;
-            }
-
-            .flower:nth-child(2) {
-                margin-left: -25vw;
-                margin-bottom: -8vw;
-                transform: scale(0.8);
-                z-index: 2;
-            }
-
-            .flower:nth-child(3) {
-                margin-left: -25vw;
-                margin-bottom: 0;
-                transform: scale(0.85);
-                z-index: 6;
-            }
-
-            .flower:nth-child(4) {
-                margin-left: -25vw;
-                margin-bottom: -10vw;
-                transform: scale(0.75);
-                z-index: 1;
-            }
-
-            .flower:nth-child(5) {
-                margin-left: -25vw;
-                margin-bottom: -5vw;
-                transform: scale(0.82);
-                z-index: 4;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .bouquet {
-                transform: scale(0.9);
-                justify-content: center;
-            }
-
-            .flower:nth-child(1) {
-                z-index: 5;
-            }
-
-            .flower:nth-child(2) {
-                margin-left: -30vw;
-                margin-bottom: -10vw;
-                transform: scale(0.75);
-            }
-
-            .flower:nth-child(3) {
-                margin-left: -30vw;
-                margin-bottom: 0;
-                transform: scale(0.8);
-                z-index: 6;
-            }
-
-            .flower:nth-child(4) {
-                margin-left: -30vw;
-                margin-bottom: -12vw;
-                transform: scale(0.7);
-            }
-
-            .flower:nth-child(5) {
-                margin-left: -30vw;
-                margin-bottom: -6vw;
-                transform: scale(0.77);
-            }
-        }
-
-        /* Landscape mobile */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .bouquet {
-                transform: scale(0.7);
-            }
-
-            .grass-container {
-                height: 35vh;
-            }
-        }
-
-        /* Desktop large screens */
-        @media (min-width: 1200px) {
-            .bouquet {
-                transform: scale(1.1);
-            }
-        }
-    </style>
+}
+</style>
 </head>
 <body>
-    <div class="info">🌸 Peony Bouquet in Bloom 🌸</div>
-    
-    <div class="container">
-        <div class="grass-container" id="grassContainer"></div>
-        
-        <div class="bouquet">
-            <div class="flower" id="flower1">
-                <!-- Outer layer petals -->
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
 
-                <!-- Middle layer petals -->
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
+<!-- Grass Ground -->
+<div class="ground" id="ground"></div>
 
-                <!-- Inner layer petals -->
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-
-                <!-- Center -->
-                <div class="bloom-center"></div>
-
-                <!-- Stem -->
-                <div class="stem">
-                    <div class="leaf"></div>
-                    <div class="leaf"></div>
-                </div>
-            </div>
-
-            <div class="flower" id="flower2">
-                <!-- Outer layer petals -->
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-
-                <!-- Middle layer petals -->
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-
-                <!-- Inner layer petals -->
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-
-                <!-- Center -->
-                <div class="bloom-center"></div>
-
-                <!-- Stem -->
-                <div class="stem">
-                    <div class="leaf"></div>
-                    <div class="leaf"></div>
-                </div>
-            </div>
-
-            <div class="flower" id="flower3">
-                <!-- Outer layer petals -->
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-
-                <!-- Middle layer petals -->
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-
-                <!-- Inner layer petals -->
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-
-                <!-- Center -->
-                <div class="bloom-center"></div>
-
-                <!-- Stem -->
-                <div class="stem">
-                    <div class="leaf"></div>
-                    <div class="leaf"></div>
-                </div>
-            </div>
-
-            <div class="flower" id="flower4">
-                <!-- Outer layer petals -->
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-
-                <!-- Middle layer petals -->
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-
-                <!-- Inner layer petals -->
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-
-                <!-- Center -->
-                <div class="bloom-center"></div>
-
-                <!-- Stem -->
-                <div class="stem">
-                    <div class="leaf"></div>
-                    <div class="leaf"></div>
-                </div>
-            </div>
-
-            <div class="flower" id="flower5">
-                <!-- Outer layer petals -->
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-                <div class="petal"><div class="petal-inner"></div></div>
-
-                <!-- Middle layer petals -->
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-                <div class="petal layer-2"><div class="petal-inner"></div></div>
-
-                <!-- Inner layer petals -->
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-                <div class="petal layer-3"><div class="petal-inner"></div></div>
-
-                <!-- Center -->
-                <div class="bloom-center"></div>
-
-                <!-- Stem -->
-                <div class="stem">
-                    <div class="leaf"></div>
-                    <div class="leaf"></div>
-                </div>
-            </div>
-        </div>
+<div class="scene">
+  
+  <div class="stem">
+    <div class="leaf left"></div>
+    <div class="leaf right"></div>
+    <div class="flower">
+      <div class="tulip">
+        <div class="petal"></div>
+        <div class="petal left"></div>
+        <div class="petal right"></div>
+      </div>
     </div>
+  </div>
 
+  <div class="stem" style="animation-delay:.3s">
+    <div class="leaf left"></div>
+    <div class="leaf right"></div>
+    <div class="flower">
+      <div class="tulip">
+        <div class="petal"></div>
+        <div class="petal left"></div>
+        <div class="petal right"></div>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        let sparkleInterval;
+  <div class="stem" style="animation-delay:.6s">
+    <div class="leaf left"></div>
+    <div class="leaf right"></div>
+    <div class="flower">
+      <div class="tulip">
+        <div class="petal"></div>
+        <div class="petal left"></div>
+        <div class="petal right"></div>
+      </div>
+    </div>
+  </div>
 
-        // Generate grass blades
-        function createGrass() {
-            const grassContainer = document.getElementById('grassContainer');
-            const screenWidth = window.innerWidth;
-            // Adjust grass count based on screen size for performance
-            const grassCount = screenWidth < 480 ? 40 : screenWidth < 768 ? 60 : 80;
-            
-            for (let i = 0; i < grassCount; i++) {
-                const blade = document.createElement('div');
-                blade.className = 'grass-blade';
-                
-                const baseHeight = screenWidth < 480 ? 40 : 50;
-                const height = baseHeight + Math.random() * (screenWidth < 480 ? 60 : 100);
-                const leftPos = Math.random() * 100;
-                const animationDelay = Math.random() * 3;
-                const animationDuration = 2 + Math.random() * 2;
-                
-                blade.style.height = `${height}px`;
-                blade.style.left = `${leftPos}%`;
-                blade.style.animationDelay = `${animationDelay}s`;
-                blade.style.animationDuration = `${animationDuration}s`;
-                
-                grassContainer.appendChild(blade);
-            }
-        }
+</div>
 
-        function createSparkle() {
-            const container = document.querySelector('.container');
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            
-            // Random position in upper area
-            const x = 10 + Math.random() * 80; // percentage
-            const y = 10 + Math.random() * 60; // percentage
-            
-            sparkle.style.left = `${x}%`;
-            sparkle.style.top = `${y}%`;
-            sparkle.style.animationDelay = `${Math.random() * 2}s`;
-            
-            container.appendChild(sparkle);
-            
-            setTimeout(() => {
-                sparkle.remove();
-            }, 2000);
-        }
+<script>
 
-        // Create grass on load
-        createGrass();
+/* 🌿 Generate Grass */
+const ground = document.getElementById("ground");
 
-        // Regenerate grass on window resize (for orientation changes)
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                const grassContainer = document.getElementById('grassContainer');
-                grassContainer.innerHTML = '';
-                createGrass();
-            }, 250);
-        });
+for(let i=0;i<150;i++){
+  const g=document.createElement("div");
+  g.className="grass";
+  g.style.left=Math.random()*100+"%";
+  g.style.height=20+Math.random()*25+"px";
+  g.style.animationDuration=2+Math.random()*2+"s";
+  ground.appendChild(g);
+}
 
-        // Start sparkles after bloom
-        setTimeout(() => {
-            // Reduce sparkle frequency on mobile for better performance
-            const isMobile = window.innerWidth < 768;
-            const sparkleDelay = isMobile ? 600 : 400;
-            
-            sparkleInterval = setInterval(() => {
-                createSparkle();
-                if (!isMobile) {
-                    createSparkle();
-                }
-            }, sparkleDelay);
-        }, 3000);
+/* ✨ Fireflies */
+for(let i=0;i<20;i++){
+  const f=document.createElement("div");
+  f.className="firefly";
+  f.style.left=Math.random()*100+"vw";
+  f.style.top=Math.random()*100+"vh";
+  f.style.animationDuration=3+Math.random()*4+"s";
+  document.body.appendChild(f);
+}
 
-        // Add mouse/touch interaction
-        const handleInteraction = (e) => {
-            // Skip on mobile to save performance
-            if (window.innerWidth < 768) return;
-            
-            const flowers = document.querySelectorAll('.flower');
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            
-            flowers.forEach((flower, index) => {
-                const rect = flower.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                
-                const deltaX = (clientX - centerX) / (100 + index * 10);
-                const deltaY = (clientY - centerY) / (100 + index * 10);
-                
-                const currentScale = flower.style.transform.match(/scale\(([\d.]+)\)/);
-                const scale = currentScale ? currentScale[1] : 1;
-                
-                flower.style.transform = `scale(${scale}) rotate(${deltaX}deg) translateY(${deltaY}px)`;
-            });
-        };
+</script>
 
-        document.addEventListener('mousemove', handleInteraction);
-        document.addEventListener('touchmove', handleInteraction, { passive: true });
-    </script>
 </body>
 </html>
